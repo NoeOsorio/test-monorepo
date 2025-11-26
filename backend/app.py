@@ -12,6 +12,11 @@ def home():
 def health():
     return jsonify({"status": "healthy"})
 
+@app.route("/api/data")
+def data():
+    return jsonify({"message": "Data from Flask!"})
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5051, debug=True)
 
