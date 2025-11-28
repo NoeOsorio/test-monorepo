@@ -26,7 +26,14 @@ services:
     ports:
       - "5051:5051"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/noe_db
+      # Puedes usar DB_URL directamente
+      DB_URL: postgresql://postgres:postgres@postgres:5432/noe_db
+      # O usar variables individuales
+      DB_HOST: postgres
+      DB_NAME: noe_db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
       FLASK_ENV: development
     depends_on:
       postgres:
