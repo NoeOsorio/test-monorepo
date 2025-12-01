@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: noe-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: noe_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: noe-backend
+    ports:
+      - "5051:5051"
+    environment:
+      # Puedes usar DB_URL directamente
+      DB_URL: postgresql://postgres:postgres@postgres:5432/noe_db
+      # O usar variables individuales
+      DB_HOST: postgres
+      DB_NAME: noe_db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      FLASK_ENV: development
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: python app.py
+
+volumes:
+  postgres_data:
+
