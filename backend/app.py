@@ -231,6 +231,7 @@ def test_environment_variables():
     test_database_port = os.getenv("TEST_DB_DB_PORT")
     test_database_user = os.getenv("TEST_DB_DB_USER")
     test_database_pass = os.getenv("TEST_DB_DB_PASS")
+    test_env = os.getenv("TEST_ENV")
 
     return jsonify({
         "status": "success",
@@ -247,7 +248,9 @@ def test_environment_variables():
         "test_database_name": test_database_name,
         "test_database_port": test_database_port,
         "test_database_user": test_database_user,
-        "test_database_pass": test_database_pass
+        "test_database_pass": test_database_pass,
+        "test_env": test_env
+
     }), 200
 
 # Inicializar la tabla CALLS al iniciar la aplicación
