@@ -215,6 +215,40 @@ def get_calls():
             "message": f"Error obteniendo calls: {str(e)}"
         }), 500
 
+@app.route("/api/test/environment-variables")
+def test_environment_variables():
+    """Endpoint para probar las variables de entorno"""
+    environment = os.getenv("FLASK_ENV")
+    database_url = os.getenv("DB_URL")
+    database_host = os.getenv("DB_HOST")
+    database_name = os.getenv("DB_NAME")
+    database_port = os.getenv("DB_PORT")
+    database_user = os.getenv("DB_USER")
+    database_pass = os.getenv("DB_PASS")
+    test_database_url = os.getenv("TEST_DB_DB_URL")
+    test_database_host = os.getenv("TEST_DB_DB_HOST")
+    test_database_name = os.getenv("TEST_DB_DB_NAME")
+    test_database_port = os.getenv("TEST_DB_DB_PORT")
+    test_database_user = os.getenv("TEST_DB_DB_USER")
+    test_database_pass = os.getenv("TEST_DB_DB_PASS")
+
+    return jsonify({
+        "status": "success",
+        "message": "Environment variables test",
+        "environment": environment,
+        "database_url": database_url,
+        "database_host": database_host,
+        "database_name": database_name,
+        "database_port": database_port,
+        "database_user": database_user,
+        "database_pass": database_pass,
+        "test_database_url": test_database_url,
+        "test_database_host": test_database_host,
+        "test_database_name": test_database_name,
+        "test_database_port": test_database_port,
+        "test_database_user": test_database_user,
+        "test_database_pass": test_database_pass
+    }), 200
 
 # Inicializar la tabla CALLS al iniciar la aplicación
 init_calls_table()
