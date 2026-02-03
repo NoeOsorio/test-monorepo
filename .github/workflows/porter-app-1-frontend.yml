@@ -2,7 +2,7 @@
     push:
         branches:
             - main
-name: Deploy to backend
+name: Deploy to frontend
 jobs:
     porter-deploy:
         runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
               timeout-minutes: 30
               run: porter apply
               env:
-                PORTER_APP_NAME: backend
+                PORTER_APP_NAME: frontend
                 PORTER_CLUSTER: "1"
                 PORTER_DEPLOYMENT_TARGET_ID: 18348af3-6bca-4ff4-a68c-092bc255a486
                 PORTER_HOST: https://noe-dev.withporter.run
