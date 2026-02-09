@@ -20,6 +20,7 @@ jobs:
           echo "PORTER_NPM_TASKFORCESH_TOKEN: $([[ -n \"$PORTER_NPM_TASKFORCESH_TOKEN\" ]] && echo set || echo unset)"
           echo "PORTER_TURBO_TOKEN: $([[ -n \"$PORTER_TURBO_TOKEN\" ]] && echo set || echo unset)"
           echo "PORTER_TURBO_TEAM: $([[ -n \"$PORTER_TURBO_TEAM\" ]] && echo set || echo unset)"
+          echo "TURBO_TEAM: $([[ -n \"$TURBO_TEAM\" ]] && echo set || echo unset)"
         env:
           PORTER_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           PORTER_NPM_TASKFORCESH_TOKEN: ${{ secrets.NPM_TASKFORCESH_TOKEN }}
@@ -39,4 +40,5 @@ jobs:
           PORTER_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           PORTER_NPM_TASKFORCESH_TOKEN: ${{ secrets.NPM_TASKFORCESH_TOKEN }}
           PORTER_TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          PORTER_TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          DOCKER_BUILDKIT: "1"
