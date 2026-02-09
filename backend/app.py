@@ -1,3 +1,4 @@
+import json
 import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -76,6 +77,15 @@ def home():
 @app.route("/api/health")
 def health():
     return jsonify({"status": "healthy"})
+
+@app.route("/api/build-args-status")
+def build_args_status():
+    try:
+        with open("/app/build_args_status.json") as f:
+            status = json.load(f)
+        return jsonify(status)
+    except FileNotFoundError:
+        return jsonify({"error": "build_args_status.json not found (image built without status step)"}), 404
 
 @app.route("/api/data")
 def data():

@@ -2,10 +2,22 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+ARG NPM_TOKEN
+ARG NPM_TASKFORCESH_TOKEN
+ARG TURBO_TOKEN
+ARG TURBO_TEAM
+
+ENV NPM_TOKEN=${NPM_TOKEN}
+ENV NPM_TASKFORCESH_TOKEN=${NPM_TASKFORCESH_TOKEN}
+ENV TURBO_TOKEN=${TURBO_TOKEN}
+ENV TURBO_TEAM=${TURBO_TEAM}
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+
+RUN python3 -c "import json, os; keys = ['NPM_TOKEN', 'NPM_TASKFORCESH_TOKEN', 'TURBO_TOKEN', 'TURBO_TEAM']; status = {k: bool(os.environ.get(k)) for k in keys}; open('/app/build_args_status.json', 'w').write(json.dumps(status))"
 
 EXPOSE 5051
 
