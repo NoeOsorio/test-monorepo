@@ -14,6 +14,17 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Setup porter
         uses: porter-dev/setup-porter@v0.1.0
+      - name: Debug build env (set/unset)
+        run: |
+          echo "PORTER_NPM_TOKEN: $([[ -n \"$PORTER_NPM_TOKEN\" ]] && echo set || echo unset)"
+          echo "PORTER_NPM_TASKFORCESH_TOKEN: $([[ -n \"$PORTER_NPM_TASKFORCESH_TOKEN\" ]] && echo set || echo unset)"
+          echo "PORTER_TURBO_TOKEN: $([[ -n \"$PORTER_TURBO_TOKEN\" ]] && echo set || echo unset)"
+          echo "PORTER_TURBO_TEAM: $([[ -n \"$PORTER_TURBO_TEAM\" ]] && echo set || echo unset)"
+        env:
+          PORTER_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PORTER_NPM_TASKFORCESH_TOKEN: ${{ secrets.NPM_TASKFORCESH_TOKEN }}
+          PORTER_TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          PORTER_TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       - name: Deploy stack
         timeout-minutes: 30
         run: porter apply
