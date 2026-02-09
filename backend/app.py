@@ -234,6 +234,17 @@ def test_environment_variables():
     test_env = os.getenv("TEST_ENV")
     secret_env = os.getenv("SECRET_ENV")
 
+
+    # Porter
+    porter_app_name = os.getenv("PORTER_APP_NAME")
+    porter_cluster = os.getenv("PORTER_CLUSTER")
+    porter_host = os.getenv("PORTER_HOST")
+    porter_pr_number = os.getenv("PORTER_PR_NUMBER")
+    porter_project = os.getenv("PORTER_PROJECT")
+    porter_repo_name = os.getenv("PORTER_REPO_NAME")
+    porter_tag = os.getenv("PORTER_TAG")
+    porter_token = os.getenv("PORTER_TOKEN")
+
     return jsonify({
         "status": "success",
         "message": "Environment variables test",
@@ -251,8 +262,15 @@ def test_environment_variables():
         "test_database_user": test_database_user,
         "test_database_pass": test_database_pass,
         "test_env": test_env,
-        "secret_env": secret_env
-
+        "secret_env": secret_env,
+        "porter_app_name": porter_app_name,
+        "porter_cluster": porter_cluster,
+        "porter_host": porter_host,
+        "porter_pr_number": porter_pr_number,
+        "porter_project": porter_project,
+        "porter_repo_name": porter_repo_name,
+        "porter_tag": porter_tag,
+        "porter_token": porter_token,
     }), 200
 
 # Inicializar la tabla CALLS al iniciar la aplicación
