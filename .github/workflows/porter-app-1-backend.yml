@@ -28,7 +28,9 @@ jobs:
           PORTER_TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       - name: Deploy stack
         timeout-minutes: 30
-        run: porter apply
+        run: |
+          porter apply \
+            --secrets "PORTER_NPM_TOKEN=$PORTER_NPM_TOKEN,PORTER_NPM_TASKFORCESH_TOKEN=$PORTER_NPM_TASKFORCESH_TOKEN,PORTER_TURBO_TOKEN=$PORTER_TURBO_TOKEN,PORTER_TURBO_TEAM=$PORTER_TURBO_TEAM"
         env:
           PORTER_APP_NAME: backend
           PORTER_CLUSTER: "1"
@@ -40,5 +42,5 @@ jobs:
           PORTER_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           PORTER_NPM_TASKFORCESH_TOKEN: ${{ secrets.NPM_TASKFORCESH_TOKEN }}
           PORTER_TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          PORTER_TURBO_TEAM: ${{ vars.TURBO_TEAM }}
           DOCKER_BUILDKIT: "1"
