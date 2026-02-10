@@ -31,3 +31,4 @@ jobs:
           PORTER_NPM_TASKFORCESH_TOKEN: ${{ secrets.PORTER_NPM_TASKFORCESH_TOKEN }}
           PORTER_TURBO_TOKEN: ${{ secrets.PORTER_TURBO_TOKEN }}
           PORTER_TURBO_TEAM: ${{ vars.PORTER_TURBO_TEAM }}
+          PORTER_TURBO_TEAM_2: ${{ vars.TURBO_TEAM }}
