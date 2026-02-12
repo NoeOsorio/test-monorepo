@@ -7,32 +7,40 @@ jobs:
     porter-deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Disable containerd image store
-              shell: bash
-              run: |
-                # Docker 29.x defaults to containerd image store which has a push bug (moby/moby#51665)
-                echo "=== Before ==="
-                docker version --format 'Docker {{.Server.Version}}'
-                docker info 2>&1 | grep -iE 'storage|driver|snapshotter|containerd' || true
-                sudo systemctl status docker --no-pager || true
-        
-                DAEMON_JSON="/etc/docker/daemon.json"
-                if [ -f "$DAEMON_JSON" ]; then
-                  jq '. + {"features": {"containerd-snapshotter": false}}' "$DAEMON_JSON" > /tmp/daemon.json
-                else
-                  echo '{"features": {"containerd-snapshotter": false}}' > /tmp/daemon.json
-                fi
-                sudo mv /tmp/daemon.json "$DAEMON_JSON"
-                sudo systemctl restart docker
-        
-                echo "=== After ==="
-                docker info 2>&1 | grep -iE 'storage|driver|snapshotter|containerd' || true
-                sudo systemctl status docker --no-pager || true
             - name: Checkout code
               uses: actions/checkout@v4
             - name: Set Github tag
               id: vars
               run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+              on:
+  push:
+    branches:
+      - main
+name: Deploy to frontend
+jobs:
+  porter-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set Github tag
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+      - name: Setup porter
+        uses: porter-dev/setup-porter@v0.1.0
+      - name: Deploy stack
+        timeout-minutes: 30
+        run: porter apply
+        env:
+          PORTER_APP_NAME: frontend
+          PORTER_CLUSTER: "1"
+          PORTER_DEPLOYMENT_TARGET_ID: 33c402f7-047b-4765-8233-bf9494942ea4
+          PORTER_HOST: https://noe-dev.withporter.run
+          PORTER_PROJECT: "1"
+          PORTER_TAG: ${{ steps.vars.outputs.sha_short }}
+          PORTER_TOKEN: ${{ secrets.PORTER_APP_1_1104217266 }}
             - name: Setup porter
               uses: porter-dev/setup-porter@v0.1.0
             - name: Deploy stack
