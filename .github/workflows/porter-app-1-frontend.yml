@@ -29,6 +29,8 @@ jobs:
           docker version
       - name: Setup porter
         uses: porter-dev/setup-porter@v0.1.0
+        with:
+          tagged_releases: v0.66.0-dev.1
       - name: Deploy stack
         timeout-minutes: 30
         run: porter apply --build-method pack --builder heroku/buildpacks:24 --attach-buildpacks heroku/nodejs
