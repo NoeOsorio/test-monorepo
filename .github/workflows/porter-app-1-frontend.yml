@@ -12,28 +12,13 @@ jobs:
       - name: Set Github tag
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v4
-      - name: Debug Docker versions
-        run: |
-          echo "=== Docker Client ==="
-          docker version
-          echo "=== Docker Info ==="
-          docker info | grep -iE 'version|api|storage|driver'
-          echo "=== Which docker ==="
-          which docker
-      - name: Disable containerd snapshotter
-        run: |
-          echo '{"features":{"containerd-snapshotter":false}}' | sudo tee /etc/docker/daemon.json
-          sudo systemctl restart docker
-          docker version
       - name: Setup porter
         uses: porter-dev/setup-porter@v0.1.0
         with:
           tagged_releases: v0.66.0-dev.1
       - name: Deploy stack
         timeout-minutes: 30
-        run: porter apply --build-method pack --builder heroku/buildpacks:24 --attach-buildpacks heroku/nodejs
+        run: porter apply
         env:
           PORTER_APP_NAME: frontend
           PORTER_CLUSTER: "1"
