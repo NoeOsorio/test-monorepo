@@ -1,18 +1,4 @@
 "on":
-    push:
-        branches:
-            - main
-name: Deploy to frontend
-jobs:
-    porter-deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-            - name: Set Github tag
-              id: vars
-              run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-              on:
   push:
     branches:
       - main
