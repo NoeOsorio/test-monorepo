@@ -68,6 +68,8 @@ npm run dev
 
 **Note:** You can use either `DB_URL` directly or the individual `DB_*` variables. If `DB_URL` is set, it takes precedence.
 
+> Testing Actions, please delete later
+
 **Frontend:**
 - `VITE_API_URL` - Backend API URL (default: http://localhost:5051)
 
