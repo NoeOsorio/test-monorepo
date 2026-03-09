@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
@@ -7,6 +8,9 @@ from psycopg2.extras import RealDictCursor, Json
 from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from datetime import datetime
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -282,6 +286,20 @@ def test_environment_variables():
         "porter_tag": porter_tag,
         "porter_token": porter_token,
     }), 200
+
+@app.route("/warn")
+def trigger_warn():
+    logger.warning("This is a test WARNING log from the backend")
+    return jsonify({"status": "warn log sent"}), 200
+
+@app.route("/error")
+def trigger_error():
+    logger.error("This is a test ERROR log from the backend")
+    return jsonify({"status": "error log sent"}), 200
+
+@app.route("/crash")
+def trigger_crash():
+    raise Exception("Intentional crash to generate error logs")
 
 # Inicializar la tabla CALLS al iniciar la aplicación
 init_calls_table()

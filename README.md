@@ -11,27 +11,27 @@ A minimal monorepo with Vite (React) frontend and Flask backend for testing clou
 
 ## Running Locally
 
-### Backend
+### Backend (dev)
 
 #### Prerequisites
 
 - Python 3.x
 - PostgreSQL database (can be run via Docker Compose)
 
-#### Option 1: Using Docker Compose (Recommended)
+#### Option 1: Docker Compose (recommended)
 
 ```bash
-docker-compose up
+docker compose up --build
 ```
 
-This will start both PostgreSQL and the backend service.
+This starts PostgreSQL and the backend service (no frontend).
 
-#### Option 2: Manual Setup
+#### Option 2: Manual (Python)
 
 1. **Start PostgreSQL database:**
 
    ```bash
-   docker-compose up postgres
+   docker compose up postgres
    ```
 
 2. **Set up environment variables:**
@@ -56,12 +56,43 @@ This will start both PostgreSQL and the backend service.
 
 The backend will be available at `http://localhost:5051`
 
-### Frontend
+### Frontend (dev)
 
 ```bash
 cd frontend
 npm install
 npm run dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+## Production-style runs
+
+### Backend (prod)
+
+#### Option 1: Run the Docker image (matches `backend/Dockerfile`)
+
+```bash
+cp backend/env.example backend/.env
+docker build -t monorepo-backend ./backend
+docker run --rm -p 5051:5051 --env-file backend/.env monorepo-backend
+```
+
+#### Option 2: Run with Gunicorn (WSGI server)
+
+```bash
+cd backend
+pip install -r requirements.txt
+gunicorn -b 0.0.0.0:5051 app:app
+```
+
+### Frontend (prod)
+
+```bash
+cd frontend
+npm install
+npm run build
+npm run preview -- --host 0.0.0.0 --port 3000
 ```
 
 ## Environment Variables
@@ -78,10 +109,6 @@ npm run dev
 
 **Note:** You can use either `DB_URL` directly or the individual `DB_*` variables. If `DB_URL` is set, it takes precedence.
 
-> Testing Actions, please delete later
-
 **Frontend:**
 
 - `VITE_API_URL` - Backend API URL (default: http://localhost:5051)
-
-Test
