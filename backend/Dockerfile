@@ -36,5 +36,5 @@ RUN python3 -c "import json, os; keys = ['NPM_TOKEN', 'NPM_TASKFORCESH_TOKEN', '
 
 EXPOSE 5051
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:5051", "--access-logfile", "-", "--error-logfile", "-", "--capture-output", "app:app"]
 

@@ -1,6 +1,7 @@
 import json
 import os
 import logging
+import sys
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
@@ -9,8 +10,15 @@ from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from datetime import datetime
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+_gunicorn_error_logger = logging.getLogger("gunicorn.error")
+if _gunicorn_error_logger.handlers:
+    logger.handlers = _gunicorn_error_logger.handlers
+    logger.setLevel(_gunicorn_error_logger.level or logging.INFO)
+    logger.propagate = False
+else:
+    logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 load_dotenv()
 

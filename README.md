@@ -83,7 +83,7 @@ docker run --rm -p 5051:5051 --env-file backend/.env monorepo-backend
 ```bash
 cd backend
 pip install -r requirements.txt
-gunicorn -b 0.0.0.0:5051 app:app
+gunicorn -b 0.0.0.0:5051 --access-logfile - --error-logfile - --capture-output app:app
 ```
 
 ### Frontend (prod)
