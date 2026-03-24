@@ -24,4 +24,7 @@ def main():
     return 0
 
 if __name__ == "__main__":
-    exit(main())
+    main()
+    print("Idling to keep container alive...")
+    while True:
+        time.sleep(86400)

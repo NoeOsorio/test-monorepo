@@ -2,6 +2,7 @@
 
 import sys
 import os
+import time
 
 def main():
     print("Starting Database Migration Worker...")
@@ -18,4 +19,9 @@ def main():
     return 0
 
 if __name__ == "__main__":
-    exit(main())
+    result = main()
+    if result != 0:
+        print("Worker failed but will idle to keep container alive...")
+        while True:
+            time.sleep(86400)
+    exit(result)
