@@ -120,6 +120,6 @@ Test scripts and workers for deployment testing:
 ```bash
 bash jobs/funny-message.sh
 bash jobs/failed-script.sh
-python jobs/funny-worker.py
-python jobs/failed-worker.py
+bash jobs/funny-worker.sh
+bash jobs/failed-worker.sh
 ```
