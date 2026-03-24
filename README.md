@@ -112,3 +112,14 @@ npm run preview -- --host 0.0.0.0 --port 3000
 **Frontend:**
 
 - `VITE_API_URL` - Backend API URL (default: http://localhost:5051)
+
+## Jobs and Workers
+
+Test scripts and workers for deployment testing:
+
+```bash
+bash jobs/funny-message.sh
+bash jobs/failed-script.sh
+python jobs/funny-worker.py
+python jobs/failed-worker.py
+```
