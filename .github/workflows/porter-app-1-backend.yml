@@ -20,8 +20,8 @@ jobs:
               env:
                 PORTER_APP_NAME: backend
                 PORTER_CLUSTER: "1"
-                PORTER_DEPLOYMENT_TARGET_ID: d07037c7-eae7-46da-83ed-b6dd2419b3de
+                PORTER_DEPLOYMENT_TARGET_ID: 70a6ff6c-0b88-4c23-9be6-8fdc31c43d84
                 PORTER_HOST: https://noe-dev.withporter.run
                 PORTER_PROJECT: "1"
                 PORTER_TAG: ${{ steps.vars.outputs.sha_short }}
-                PORTER_TOKEN: ${{ secrets.PORTER_APP_1_1104217266 }}
+                PORTER_TOKEN: ${{ secrets.PORTER_APP_1_2 }}
